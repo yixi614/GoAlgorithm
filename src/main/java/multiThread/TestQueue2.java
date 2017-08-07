@@ -1,26 +1,19 @@
 package multiThread;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.util.NoSuchElementException;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by ztang16 on 8/6/2017.
  *
  */
-public class TestQueue {
+public class TestQueue2 {
 
   public void start() {
     try {
       int queueCapacity = 100000;
-      BoundedBlockingQueue<String> queue = null;
-      BoundedBlockingQueue<String> queue1 =
-              new BoundedBlockingQueueUsingObjectMonitor(queueCapacity);
+      LinkedBlockingQueue queue = new LinkedBlockingQueue(queueCapacity);
 
-      BoundedBlockingQueue<String> queue2 =
-              new BoundedBlockingQueueUsingReentrantLock<String>(queueCapacity);
-
-      queue = queue1;
       int workerCount = 10000;
       int operations = 10000;
       Thread[] producers = new Thread[workerCount];
@@ -38,14 +31,12 @@ public class TestQueue {
         producers[i].join();
         consumers[i].join();
       }
-    } catch (InvalidArgumentException e) {
-      e.printStackTrace();
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
   }
   public static void main (String[] args) {
-    TestQueue test = new TestQueue();
+    TestQueue2 test = new TestQueue2();
     Long timestamp = System.currentTimeMillis();
     test.start();
     Long timestamp2 = System.currentTimeMillis();
@@ -53,22 +44,22 @@ public class TestQueue {
   }
 
   public class producer implements Runnable {
-    private BoundedBlockingQueue<String> queue;
+    private LinkedBlockingQueue<String> queue;
     private int count = 0;
     private int operations = 0;
-    public producer(BoundedBlockingQueue<String> queue, int count) {
+    public producer(LinkedBlockingQueue<String> queue, int count) {
       this.queue = queue;
       this.count = count;
     }
     public void run() {
       while (operations < count) {
         try {
-          queue.add(Long.toString(Thread.currentThread().getId()));
+          queue.put(Long.toString(Thread.currentThread().getId()));
           operations++;
 //          System.out.println("producerTID:" + Long.toString(Thread.currentThread().getId()) +
 //                  ", operations:" + operations +
 //                  ", put its own id");
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
           e.printStackTrace();
         }
       }
@@ -76,25 +67,25 @@ public class TestQueue {
   }
 
   public class consumer implements Runnable {
-    private BoundedBlockingQueue<String> queue;
+    private LinkedBlockingQueue<String> queue;
     private int count = 0;
     private int operations = 0;
-    public consumer(BoundedBlockingQueue<String> queue, int count) {
+    public consumer(LinkedBlockingQueue<String> queue, int count) {
       this.queue = queue;
       this.count = count;
     }
     public void run() {
       while (operations < count) {
         try {
-          String a = queue.remove();
+          String a = queue.take();
           operations++;
 //          System.out.println("consumerTID:" + Long.toString(Thread.currentThread().getId()) +
 //                  ", operations:" + operations +
 //                  ", remove and got element: " + a);
           //Thread.sleep(1);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
         } catch (NoSuchElementException e) {
+          e.printStackTrace();
+        } catch (InterruptedException e) {
           e.printStackTrace();
         }
       }

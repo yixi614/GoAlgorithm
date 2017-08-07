@@ -2,9 +2,7 @@ package multiThread;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -14,7 +12,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * TODO: this implementation has bug when remove. try to fix this
  */
 public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockingQueue{
-  private final Queue<E> queue = new LinkedList<E>();
   private final int capacity;
   private final AtomicInteger count = new AtomicInteger(0);
 
@@ -24,10 +21,31 @@ public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockin
   private final Condition notFull = putLock.newCondition();
   private final Condition notEmpty = takeLock.newCondition();
 
+  static class Node<E> {
+    E item;
+    Node<E> next;
+    Node(E x) {item = x;}
+  }
+
+  private transient Node<E> head;
+  private transient Node<E> last;
+  private void enqueue(Node<E> node) {
+    last = last.next = node;
+  }
+  private E dequeque() {
+    Node<E> h = head;
+    Node<E> first = h.next;
+    h.next = h;
+    head = first;
+    E x = first.item;
+    first.item = null;
+    return x;
+  }
   public BoundedBlockingQueueUsingReentrantLock(int capacity) throws InvalidArgumentException {
     if (capacity <= 0)  throw new InvalidArgumentException(
             new String[] {"The capacity of the queue must be > 0."});
     this.capacity = capacity;
+    last = head = new Node<E>(null);
   }
 
   public int size() {
@@ -38,14 +56,15 @@ public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockin
     if (e == null) throw new NullPointerException("Null element is not allowed.");
 
     int oldCount = -1;
-    putLock.lock();
+    Node<E> node = new Node<E>((E) e);
+    putLock.lockInterruptibly();
     try {
       // we use count as a wait condition although count isn't protected by a lock
       // since at this point all other put threads are blocked, count can only
       // decrease (via some take thread).
       while (count.get() == capacity) notFull.await();
 
-      queue.add((E) e);
+      enqueue(node);
       oldCount = count.getAndIncrement();
       //System.out.println("queue size:" + size());
       if (oldCount + 1 < capacity) {
@@ -70,11 +89,11 @@ public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockin
     E e;
 
     int oldCount = -1;
-    takeLock.lock();
+    takeLock.lockInterruptibly();
     try {
       while (count.get() == 0) notEmpty.await();
       //System.out.println("queue size:" + size());
-      e = queue.remove();
+      e = dequeque();
       oldCount = count.getAndDecrement();
       if (oldCount > 1) {
         notEmpty.signal(); // notify other consumers for count change
@@ -102,7 +121,12 @@ public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockin
 
     takeLock.lock();
     try {
-      return queue.peek();
+      Node<E> first = head.next;
+      if (first == null) {
+        return null;
+      } else {
+        return first.item;
+      }
     } finally {
       takeLock.unlock();
     }
