@@ -11,6 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by ztang16 on 8/6/2017.
+ * TODO: this implementation has bug when remove. try to fix this
  */
 public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockingQueue{
   private final Queue<E> queue = new LinkedList<E>();
@@ -46,7 +47,7 @@ public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockin
 
       queue.add((E) e);
       oldCount = count.getAndIncrement();
-      System.out.println("queue size:" + size());
+      //System.out.println("queue size:" + size());
       if (oldCount + 1 < capacity) {
         notFull.signal(); // notify other producers for count change
       }
@@ -72,10 +73,9 @@ public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockin
     takeLock.lock();
     try {
       while (count.get() == 0) notEmpty.await();
-
+      //System.out.println("queue size:" + size());
       e = queue.remove();
       oldCount = count.getAndDecrement();
-      System.out.println("queue size:" + size());
       if (oldCount > 1) {
         notEmpty.signal(); // notify other consumers for count change
       }

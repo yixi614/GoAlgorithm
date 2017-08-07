@@ -41,7 +41,7 @@ public class BoundedBlockingQueueUsingObjectMonitor<E> implements BoundedBlockin
 
     queue.add((E) e);
     oldCount = count.getAndIncrement();
-    System.out.println("queue size:" + size());
+    //only notify all when needed. can boost performance
     if (oldCount == 0) {
       notifyAll(); // notify other waiting threads (could be producers or consumers)
     }
@@ -55,7 +55,6 @@ public class BoundedBlockingQueueUsingObjectMonitor<E> implements BoundedBlockin
 
     e = queue.remove();
     oldCount = count.getAndDecrement();
-    System.out.println("queue size:" + size());
     if (oldCount == this.capacity) {
       notifyAll(); // notify other waiting threads (could be producers or consumers)
     }
