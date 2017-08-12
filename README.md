@@ -1,2 +1,2 @@
 # algorithm
-Practice more
+Practise more
