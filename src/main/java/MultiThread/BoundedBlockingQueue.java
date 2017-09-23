@@ -1,4 +1,4 @@
-package multiThread;
+package MultiThread;
 
 /**
  * Created by ztang16 on 8/6/2017.

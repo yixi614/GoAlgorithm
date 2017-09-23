@@ -1,4 +1,4 @@
-package common;
+package Common;
 
 public class BitMap {
   private final int BITSPERWORD = 32;

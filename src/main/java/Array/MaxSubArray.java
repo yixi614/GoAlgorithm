@@ -1,3 +1,5 @@
+package Array;
+
 /**
  *
  * 1, -2, 3, 10, -4, 7, 2, -5
@@ -23,7 +25,7 @@ public class MaxSubArray {
   public static void main(String[] args) {
     //int[] a = {1, -2, 3, 10, -4, 7, 2, -5};
     int[] b = {12,-1,-3,13,-21,3};
-    //System.out.println(MaxSubArray.maxSubArray(a));
+    //System.out.println(Array.MaxSubArray.maxSubArray(a));
     System.out.println(MaxSubArray.maxSubArray(b));
   }
 }

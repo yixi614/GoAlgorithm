@@ -1,4 +1,4 @@
-package multiThread;
+package MultiThread;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
 

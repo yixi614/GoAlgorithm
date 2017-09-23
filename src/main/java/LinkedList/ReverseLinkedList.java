@@ -1,5 +1,8 @@
-import common.CommonBuilder;
-import common.LinkedNode;
+package LinkedList;
+
+
+import Common.CommonBuilder;
+import Common.LinkedNode;
 
 /**
  * reverse a linked list
@@ -35,7 +38,7 @@ public class ReverseLinkedList {
     LinkedNode head = CommonBuilder.buildLindedList(a);
     System.out.println(head.printList(head));
     LinkedNode newHead = ReverseLinkedList.run(head);
-    //LinkedNode newHead = ReverseLinkedList.runRecursive(head);
+    //LinkedNode newHead = LinkedList.ReverseLinkedList.runRecursive(head);
     System.out.println(head.printList(newHead));
   }
 }

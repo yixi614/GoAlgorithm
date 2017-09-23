@@ -1,5 +1,7 @@
-import common.CommonBuilder;
-import common.TreeNode;
+package Tree;
+
+import Common.CommonBuilder;
+import Common.TreeNode;
 
 import java.util.Arrays;
 import java.util.List;

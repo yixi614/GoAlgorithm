@@ -1,4 +1,6 @@
-import common.TreeNode;
+package Tree;
+
+import Common.TreeNode;
 
 import java.util.Vector;
 

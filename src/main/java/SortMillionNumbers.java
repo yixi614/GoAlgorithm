@@ -1,5 +1,5 @@
-import common.BitMap;
-import common.Utils;
+import Common.BitMap;
+import Common.Utils;
 
 import java.util.Arrays;
 

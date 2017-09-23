@@ -1,4 +1,4 @@
-package multiThread;
+package MultiThread;
 
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingQueue;

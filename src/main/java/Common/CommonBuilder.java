@@ -1,4 +1,4 @@
-package common;
+package Common;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class CommonBuilder {
     return head;
   }
 
-  private static TreeNode constructBSTTree(int start, int end, Integer[] a) {
+  public static TreeNode constructBSTTree(int start, int end, Integer[] a) {
     if (start == end) {
       return new TreeNode(a[start]);
     }
