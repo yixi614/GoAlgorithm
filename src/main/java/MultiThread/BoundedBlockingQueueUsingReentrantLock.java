@@ -9,7 +9,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by ztang16 on 8/6/2017.
- * TODO: this implementation has bug when remove. try to fix this
  * Solved: don't use java linkedlist in it. Use own linked list implementation with two pointer
  */
 public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockingQueue{
