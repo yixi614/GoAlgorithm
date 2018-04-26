@@ -1,3 +1,5 @@
+package Array;
+
 /**
  * input k, output the k smallest elements
  * 1,2,3,4,5,6,7,8. k=4. output=1,2,3,4
