@@ -8,6 +8,20 @@ package Array;
  */
 public class MaxSubArray {
 
+  /*
+  // DP solution
+  public int maxSubArray(int[] elements) {
+    int n = elements.length;
+    int[] dp = new int[n]; // dp[i] means the maximum subarray ending with A[i]
+    dp[0] = elements[0];
+    for (int i = 0; i < n; i++) {
+      dp[i] = A[i] + (dp[i-1] > 0 ? dp[i-1]:0); // if dp[i-1] <=0, we just exclude it(because it will make sum even smaller) and start a new accumulation from 0
+      max = Math.max(max, dp[i]);
+    }
+    return max;
+  }
+  */
+
   public static int maxSubArray(int[] elements) {
     int sum = 0;
     int max = sum;

@@ -28,12 +28,12 @@ public class MinStack {
   }
 
   public int getTop() {
-    return top;
+    return empty()?Integer.MIN_VALUE:elements[top-1].val;
   }
 
   public int pop(){
     if (empty()) {
-      return 65535;
+      return Integer.MIN_VALUE;
     }
     return elements[--top].val;
   }
