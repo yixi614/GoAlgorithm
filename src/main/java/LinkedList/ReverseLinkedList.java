@@ -4,6 +4,10 @@ package LinkedList;
 import Common.CommonBuilder;
 import Common.LinkedNode;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * reverse a linked list
  */
@@ -13,10 +17,10 @@ public class ReverseLinkedList {
     if (node == null || node.next == null) {
       return node;
     }
-    LinkedNode remaining = runRecursive(node.next);
+    LinkedNode newHead = runRecursive(node.next);
     node.next.next = node;
     node.next = null;
-    return remaining;
+    return newHead;
   }
 
   public static LinkedNode run(LinkedNode current) {
@@ -37,8 +41,8 @@ public class ReverseLinkedList {
     int[] a = {1,2,3,4,5,6};
     LinkedNode head = CommonBuilder.buildLindedList(a);
     System.out.println(head.printList(head));
-    LinkedNode newHead = ReverseLinkedList.run(head);
-    //LinkedNode newHead = LinkedList.ReverseLinkedList.runRecursive(head);
+    //LinkedNode newHead = ReverseLinkedList.run(head);
+    LinkedNode newHead = ReverseLinkedList.runRecursive(head);
     System.out.println(head.printList(newHead));
   }
 }
