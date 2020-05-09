@@ -23,10 +23,10 @@ public class KthLargestElement {
 
   public int partition2(int[] data, int start, int end) {
     int i = start;
-    int j = end + 1;
+    int j = end;
     while (true) {
-      while (i < end && data[i] < data[start]) {i++;}
-      while(j > start && data[j] > data[start]) {j--;}
+      while (i <= end && data[i] <= data[start]) {i++;}
+      while(j >= start && data[j] > data[start]) {j--;}
       if (i >= j) {break;}
       this.swap(data, i, j);
     }
@@ -61,6 +61,17 @@ public class KthLargestElement {
       }
     }
     return data[toFindK];
+  }
+
+  public static void main(String[] args) {
+    int[] a = {1,2,3,4,5,7,8};
+    int k = 2;
+    // expect return 7
+    KthLargestElement c = new KthLargestElement();
+    int res = c.getKthLargest(a, k);
+    int res2 = c.getKthLargetst2(a, k);
+    System.out.println(res);
+    System.out.println(res2);
   }
 
 }
