@@ -8,32 +8,73 @@ package Array;
  */
 public class MaxSubArray {
 
-  /*
-  // DP solution
-  public int maxSubArray(int[] elements) {
-    int n = elements.length;
-    int[] dp = new int[n]; // dp[i] means the maximum subarray ending with A[i]
-    dp[0] = elements[0];
-    for (int i = 0; i < n; i++) {
-      dp[i] = A[i] + (dp[i-1] > 0 ? dp[i-1]:0); // if dp[i-1] <=0, we just exclude it(because it will make sum even smaller) and start a new accumulation from 0
-      max = Math.max(max, dp[i]);
+  // DP solution,O(n)
+  public static int maxSubArray2(int[] nums) {
+     //dp[n] represent maxium sum of subarray 0...n
+     //we are looking for max (dp0,...dpN)
+     if (nums == null) {
+         return 0;
+     }
+     int count = nums.length;
+     int[] dp = new int[count];
+     dp[0] = nums[0];
+     int max = nums[0];
+     for (int i = 1; i < count; i++) {
+         dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
+         max = Math.max(dp[i], max);
+     }
+     return max;
+  }
+
+  // dp O(1)
+  public static int maxSubArray(int[] nums) {
+    // dp[n] represent maxium sum of subarray 0...n
+    // we are looking for max (dp0,...dpN)
+    if (nums == null) {
+      return 0;
+    }
+    int count = nums.length;
+    int pre = nums[0];
+    int max = nums[0];
+    for (int i = 1; i < count; i++) {
+      pre = Math.max(pre + nums[i], nums[i]);
+      max = Math.max(pre, max);
     }
     return max;
   }
-  */
 
-  public static int maxSubArray(int[] elements) {
-    int sum = 0;
-    int max = sum;
-    for (int i = 0; i < elements.length; i++) {
-      sum += elements[i];
-      if (sum < 0) {
-        sum = 0;
-      } else if (max < sum) {
-          max = sum;
-      }
+  public class Status {
+    public int lSum, rSum, mSum, iSum;
+
+    public Status(int lSum, int rSum, int mSum, int iSum) {
+      this.lSum = lSum;
+      this.rSum = rSum;
+      this.mSum = mSum;
+      this.iSum = iSum;
     }
-    return max;
+  }
+
+  // Segment Tree
+  public int maxSubArray1(int[] nums) {
+    return getInfo(nums, 0, nums.length - 1).mSum;
+  }
+
+  public Status getInfo(int[] a, int l, int r) {
+    if (l == r) {
+      return new Status(a[l], a[l], a[l], a[l]);
+    }
+    int m = (l + r) >> 1;
+    Status lSub = getInfo(a, l, m);
+    Status rSub = getInfo(a, m + 1, r);
+    return pushUp(lSub, rSub);
+  }
+
+  public Status pushUp(Status l, Status r) {
+    int iSum = l.iSum + r.iSum;
+    int lSum = Math.max(l.lSum, l.iSum + r.lSum);
+    int rSum = Math.max(r.rSum, r.iSum + l.rSum);
+    int mSum = Math.max(Math.max(l.mSum, r.mSum), l.rSum + r.lSum);
+    return new Status(lSum, rSum, mSum, iSum);
   }
 
   public static void main(String[] args) {
