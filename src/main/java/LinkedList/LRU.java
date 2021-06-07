@@ -11,77 +11,79 @@ import java.util.Map;
  * In the constructor of the class the size of the cache should be intitialized.
  *
  * */
-class DlinkedNode {
-  int key;
-  int val;
-  DlinkedNode pre;
-  DlinkedNode next;
-}
-public class LRU {
-  private int capacity = 0;
-  private int count = 0;
-  Map<Integer, DlinkedNode> map = null;
-  DlinkedNode head = null;
-  DlinkedNode tail = null;
-  public LRU(int capacity) {
-    this.capacity = capacity;
-    map = new HashMap<>();
-    tail = new DlinkedNode();
-    head = new DlinkedNode();
+class LRUCache {
+  public class DlinkedNode {
+    int key;
+    int value;
+    DlinkedNode pre;
+    DlinkedNode next;
+    public DlinkedNode() {}
+    public DlinkedNode(int k, int v) {
+      this.key = k;
+      this.value = v;
+    }
+  }
+  // key to node
+  HashMap<Integer, DlinkedNode> keyToNode;
+  DlinkedNode head = new DlinkedNode();
+  DlinkedNode tail = new DlinkedNode();
+  int maxCapacity;
+  public LRUCache(int capacity) {
+    this.maxCapacity = capacity;
+    keyToNode = new HashMap();
     head.next = tail;
+    head.pre = tail;
     tail.pre = head;
+    tail.next = head;
   }
 
   public int get(int key) {
-    DlinkedNode r = map.get(key);
-    if (null == r) {
+    DlinkedNode node = keyToNode.get(key);
+    if (node == null) {
       return -1;
     }
-    this.moveToHead(r);
-    return r.val;
+    moveToHead(node);
+    return node.value;
   }
 
   public void put(int key, int value) {
-    DlinkedNode node = map.get(key);
-    if (node == null) {
-      DlinkedNode newNode = new DlinkedNode();
-      newNode.val = value;
-      newNode.key = key;
-      map.put(key, newNode);
-      this.addToHead(newNode);
-      count++;
-      if (count > capacity) {
-        this.evict();
-      }
-    } else {
-      node.val = value;
-      this.moveToHead(node);
+    DlinkedNode node = keyToNode.get(key);
+    if (node != null) {
+      node.value = value;
+      moveToHead(node);
+      return;
     }
+    if (keyToNode.size() == maxCapacity) {
+      evict();
+    }
+    DlinkedNode newNode = new DlinkedNode(key, value);
+    keyToNode.put(key, newNode);
+    addToHead(newNode);
   }
 
-  private void moveToHead(DlinkedNode node) {
-    this.removeNode(node);
-    this.addToHead(node);
+  public void moveToHead(DlinkedNode node) {
+    if (node == head.next) {
+      return;
+    }
+    deleteNode(node);
+    addToHead(node);
   }
 
-  private void removeNode(DlinkedNode node) {
-    DlinkedNode pre = node.pre;
-    pre.next = node.next;
-    node.next.pre = pre;
+  public void evict() {
+    keyToNode.remove(tail.pre.key);
+    deleteNode(tail.pre);
   }
 
-  private void addToHead(DlinkedNode node) {
-    DlinkedNode oldFirst = head.next;
-    oldFirst.pre = node;
-    node.next = oldFirst;
-    node.pre = head;
-    head.next = node;
+  public void deleteNode(DlinkedNode node) {
+    node.pre.next = node.next;
+    node.next.pre = node.pre;
   }
 
-  private void evict() {
-    DlinkedNode node = tail.pre;
-    map.remove(node.key);
-    this.removeNode(node);
-    count--;
+  public void addToHead(DlinkedNode newHead) {
+    DlinkedNode currentHead = head.next;
+    newHead.pre = head;
+    newHead.next = currentHead;
+    currentHead.pre = newHead;
+    head.next = newHead;
   }
 }
