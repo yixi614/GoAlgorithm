@@ -81,5 +81,6 @@ public class MinimumSubString {
     s = "a";
     t = "a";
     System.out.println(MinimumSubString.minWindow(s, t));
+    //1231231
   }
 }
