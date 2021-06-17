@@ -19,6 +19,7 @@
 
 package Array;
 
+// without creating new array
 public class MergeTwoSortedArray {
   public static void merge(int[] nums1, int m, int[] nums2, int n) {
     int p1 = m - 1;

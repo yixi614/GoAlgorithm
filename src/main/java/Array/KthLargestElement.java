@@ -9,15 +9,19 @@ public class KthLargestElement {
     data[j] = temp;
   }
 
-  public int partition(int[] data, int start, int end) {
-    int piviot = data[start];
-    int pos = start;
-    for (int i = start + 1; i < end; i++) {
-      if (data[i] <= piviot) {
-        this.swap(data,++pos, i);// ++pos make it point to the first element that >= piviot
+  private int partition(int[] arr, int begin, int end) {
+    int pivot = arr[begin];
+    int i;
+    // pos always points to the latest known element that <= pivot
+    int pos = begin;
+    for (i = begin + 1; i <= end; i++) {
+      if (arr[i] <= pivot) {
+        // found one smaller element, pos should move to the next element which > pivot
+        pos++;
+        swap(arr, i, pos);
       }
     }
-    this.swap(data, start, pos);
+    swap(arr, begin, pos);
     return pos;
   }
 
@@ -47,24 +51,24 @@ public class KthLargestElement {
   }
   // using partition
   public int getKthLargetst2(int[] data, int k) {
-    int toFindK = data.length - k;
+    int toFindKIndex = data.length - k;
     int start = 0;
     int end = data.length -1;
     while (start < end) {
       int i = partition2(data, start, end);
-      if (i < toFindK) {
+      if (i < toFindKIndex) {
         start = i + 1;
-      } else if(i > toFindK){
+      } else if(i > toFindKIndex){
         end = i - 1;
       } else {
         break;// i = toFindK found Kth largest
       }
     }
-    return data[toFindK];
+    return data[toFindKIndex];
   }
 
   public static void main(String[] args) {
-    int[] a = {1,2,3,4,5,7,8};
+    int[] a = {1,3,2,5,7,4,8};
     int k = 2;
     // expect return 7
     KthLargestElement c = new KthLargestElement();
