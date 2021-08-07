@@ -1,7 +1,5 @@
 package MultiThread;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -15,9 +13,10 @@ public class BoundedBlockingQueueUsingObjectMonitor<E> implements BoundedBlockin
   private final int capacity;
   private final AtomicInteger count = new AtomicInteger(0);
 
-  public BoundedBlockingQueueUsingObjectMonitor(int capacity) throws InvalidArgumentException {
-    if (capacity <= 0)  throw new InvalidArgumentException(
-            new String[]{"The capacity of the queue must be > 0."});
+  public BoundedBlockingQueueUsingObjectMonitor(int capacity) throws Exception {
+    if (capacity <= 0) {
+      throw new Exception("The capacity of the queue must be > 0.");
+    }
     this.capacity = capacity;
   }
 

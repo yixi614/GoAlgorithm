@@ -19,7 +19,7 @@
 
 package Common;
 
-public     class UnionFind {
+public class UnionFind {
   // parents[i] is element i's parent's index
   int[] parents;
   // weights[i] is the weights(num of nodes) of tree i which is root

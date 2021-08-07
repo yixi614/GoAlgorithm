@@ -1,7 +1,5 @@
 package MultiThread;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.util.NoSuchElementException;
 
 /**
@@ -10,8 +8,7 @@ import java.util.NoSuchElementException;
  */
 public class TestQueue {
 
-  public void start() {
-    try {
+  public void start() throws Exception {
       int queueCapacity = 100000;
       BoundedBlockingQueue<String> queue = null;
       BoundedBlockingQueue<String> queue1 =
@@ -21,8 +18,8 @@ public class TestQueue {
               new BoundedBlockingQueueUsingReentrantLock<String>(queueCapacity);
 
       queue = queue1;
-      int workerCount = 10000;
-      int operations = 10000;
+      int workerCount = 100;
+      int operations = 100;
       Thread[] producers = new Thread[workerCount];
       Thread[] consumers = new Thread[workerCount];
       for (int i = 0; i < workerCount; i++) {
@@ -38,13 +35,9 @@ public class TestQueue {
         producers[i].join();
         consumers[i].join();
       }
-    } catch (InvalidArgumentException e) {
-      e.printStackTrace();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+
   }
-  public static void main (String[] args) {
+  public static void main (String[] args) throws Exception {
     TestQueue test = new TestQueue();
     Long timestamp = System.currentTimeMillis();
     test.start();

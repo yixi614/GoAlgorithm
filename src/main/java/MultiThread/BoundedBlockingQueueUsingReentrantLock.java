@@ -1,7 +1,5 @@
 package MultiThread;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
@@ -41,9 +39,10 @@ public class BoundedBlockingQueueUsingReentrantLock<E> implements BoundedBlockin
     first.item = null;
     return x;
   }
-  public BoundedBlockingQueueUsingReentrantLock(int capacity) throws InvalidArgumentException {
-    if (capacity <= 0)  throw new InvalidArgumentException(
-            new String[] {"The capacity of the queue must be > 0."});
+  public BoundedBlockingQueueUsingReentrantLock(int capacity) throws Exception {
+    if (capacity <= 0) {
+      throw new Exception("The capacity of the queue must be > 0.");
+    }
     this.capacity = capacity;
     last = head = new Node<E>(null);
   }
