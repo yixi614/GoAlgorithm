@@ -21,9 +21,13 @@ public class QuickSort {
       if (arr[i] <= pivot) {
         // found one smaller element, pos should move to the next element which > pivot
         pos++;
+        // i point to a value that is <= pivot, pos point to a value that is > privot.
+        // Swap them so that keep "the pos always points to a value <= pivot".
+        // Note that the Pivot element (index is "begin") itself doesn't change index. We'll put it to the proper position in the end
         swap(arr, i, pos);
       }
     }
+    // put pivot(index is "begin") to the correct index "pos" so that all left elements are <= pivot and right elements are > pivot
     swap(arr, begin, pos);
     return pos;
   }
