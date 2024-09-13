@@ -44,6 +44,7 @@ public class Trie {
       if (ws.children[c - 'a'] == null) {
         return false;
       }
+      ws = ws.children[c - 'a'];
     }
     return true;
   }
