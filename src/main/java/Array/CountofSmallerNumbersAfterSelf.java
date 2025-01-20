@@ -130,4 +130,13 @@ Output: [0,0]
         }
         return result;
     }
+
+    public static void main(String[] args) {
+        int[] input = {5,2,6,1};
+        CountofSmallerNumbersAfterSelf ccc = new CountofSmallerNumbersAfterSelf();
+        List<Integer> result = ccc.countSmaller(input);
+        for (Integer i : result) {
+            System.out.println(i);
+        }
+    }
 }
