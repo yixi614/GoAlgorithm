@@ -18,7 +18,8 @@ public class HeapSort {
         int n = array.length;
 
         // Build max heap
-        for (int i = n / 2 - 1; i >= 0; i--) {
+        // n/2 is the last non-leaf node. 1 is the root
+        for (int i = n / 2; i >= 1; i--) {
             heapify(array, n, i);
         }
 
@@ -35,6 +36,7 @@ public class HeapSort {
     }
 
     // Heapify a subtree rooted with node i which is an index in array[]
+    // heapify has another name "siftdown"
     static void heapify(int[] array, int n, int i) {
         int largest = i; // Initialize largest as root
         int leftChild = 2 * i + 1;

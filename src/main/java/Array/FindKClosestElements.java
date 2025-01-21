@@ -90,7 +90,7 @@ public class FindKClosestElements {
     // Approach:
     // Using binary search and a sliding window, find the midpoint where,
     // the integers between midpoint and midpoint + k is the k closest integers to x.
-    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+    public static List<Integer> findClosestElements(int[] arr, int k, int x) {
 
         // The sliding window is between 'mid' and 'mid' + k.
         int left = 0, right = arr.length - k;
@@ -119,10 +119,10 @@ public class FindKClosestElements {
     }
 
     public static void main(String[] args) {
-//        int[] arr = {1,2,3,4,5};
-//        int k = 4, x = 3;
-        int[] arr = {1,1,2,2,2,2,2,3,3};
-        int k = 3, x = 3;
+        int[] arr = {1,2,3,4,5};
+        int k = 3, x = -1;
+//        int[] arr = {1,1,2,2,2,2,2,3,3};
+//        int k = 3, x = 3;
         List<Integer> re = findClosestElements2(arr, k, x);
         for (Integer i : re) {
             System.out.print(i + ",");
