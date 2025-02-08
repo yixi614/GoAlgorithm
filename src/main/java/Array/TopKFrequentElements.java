@@ -10,6 +10,7 @@ public class TopKFrequentElements {
         for (int num : nums) {
             freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
         }
+        // min Heap
         PriorityQueue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>(
                 (a, b) -> a.getValue() - b.getValue());
         for (Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
@@ -24,5 +25,4 @@ public class TopKFrequentElements {
         }
         return result;
     }
-
 }

@@ -32,6 +32,22 @@ package Array;
  * It's maximum subarray is 3, 10, -4, 7, 2
  * The method should return 18
  */
+
+/**
+ * see explanation here
+ * https://medium.com/@rsinghal757/kadanes-algorithm-dynamic-programming-how-and-why-does-it-work-3fd8849ed73d
+ *
+ * Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+ *
+ * From the figure above, we see that the local_maximum[4] is equal to 3 which is the sum of the subarray [4, -1].
+ * Now have a look at the subarrays ending with A[5]. You’ll notice that these subarrays can be divided into two parts,
+ * the subarrays ending with A[4] (highlighted with yellow) and the single element subarray A[5] (in green).
+ *
+ * Let’s say somehow I know the local_maximum[4]. Then we see that to calculate the local_maximum[5],
+ * we don’t need to compute the sum of all subarrays ending with A[5] since we already know the result from arrays ending with A[4].
+ * Note that if array [4, -1] had the maximum sum, then we only need to check the arrays highlighted with the red arrows to calculate local_maximum[5].
+ * And this leads us to the principle on which Kadane’s Algorithm works.
+ * */
 public class MaxSubArray {
 
   // DP solution,O(n)

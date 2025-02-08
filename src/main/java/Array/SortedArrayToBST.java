@@ -43,7 +43,7 @@ public class SortedArrayToBST {
       return root;
     }
     public static void main(String[] args) {
-      int[] list = {6,4,8,10};
+      int[] list = {6,4,8,10,1,2,3,7};
       Arrays.sort(list);
       TreeNode root = SortedArrayToBST.sortedArrayToBST(list);
       CommonBuilder.prettyPrint(root.printB());

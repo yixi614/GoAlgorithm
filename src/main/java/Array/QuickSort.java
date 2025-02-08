@@ -3,7 +3,7 @@ package Array;
 import java.util.Arrays;
 
 public class QuickSort {
-
+  public static int count = 0;
   public void quickSort(int[] arr, int begin, int end) {
     if (begin < end) {
       int partitionIndex = partition(arr, begin, end);
@@ -23,7 +23,7 @@ public class QuickSort {
         pos++;
         // i point to a value that is <= pivot, pos point to a value that is > privot.
         // Swap them so that keep "the pos always points to a value <= pivot".
-        // Note that the Pivot element (index is "begin") itself doesn't change index. We'll put it to the proper position in the end
+        // Note that the Pivot element (index is "begin") itself doesn't change position. We'll put it to the proper position in the end
         swap(arr, i, pos);
       }
     }
@@ -40,7 +40,8 @@ public class QuickSort {
 
   public static void main(String[] args) {
     QuickSort qs = new QuickSort();
-    int[] numArray = {6,3,1,4,2,10,5,9,4,0,123,43,12,0};
+    //int[] numArray = {6,3,1,4,2,10,5,9,4,0,123,43,12,0};
+    int[] numArray = {6,3,1,4,2,10,5,9,4,0};
     qs.quickSort(numArray, 0, numArray.length - 1);
     Arrays.stream(numArray).forEach(x -> System.out.println(x));
   }

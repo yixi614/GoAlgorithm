@@ -2,6 +2,45 @@ package SystemDesign;
 
 import java.util.*;
 
+/**
+ * Vector locks (also known as version vectors or vector clocks) are used in distributed key-value stores to track the causal relationships and
+ * ordering of events, particularly for handling concurrent updates and conflict resolution. Here's a detailed explanation:
+ * Purpose and Core Functions:
+ *
+ * Track Causality
+ *
+ *
+ * Helps determine if two operations happened concurrently or if one happened before another
+ * Maintains version history across multiple replicas
+ * Enables detection of conflicts during replication
+ *
+ *
+ * Conflict Detection
+ *
+ *
+ * When multiple clients update the same key simultaneously
+ * When network partitions cause divergent updates
+ * When replicas become temporarily disconnected
+ *
+ *
+ * Limitations:
+ *
+ * Vector Size Growth
+ *
+ *
+ * Vectors grow with number of nodes
+ * Can become large in large clusters
+ * May need periodic pruning
+ *
+ *
+ * Resolution Complexity
+ *
+ *
+ * May need application-specific conflict resolution
+ * Can be complex to implement correctly
+ * Overhead in storage and computation
+ * */
+
 class VectorClock {
     // key is the server id, value is the clock value. For causality record
     private Map<String, Integer> clock = new HashMap<>();
