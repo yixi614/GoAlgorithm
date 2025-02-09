@@ -62,7 +62,7 @@ public class BSTToLinkedList {
   public static void main(String[] args) {
     List<Integer> nums = Arrays.asList(4,6,8,10,12,14,16,18,19,20);
     TreeNode root = CommonBuilder.buildBSTTree(nums);
-    System.out.println(root.midTraverse());
+    System.out.println(root.inOrderTraverse());
     TreeNode head = BSTToLinkedList.transform(root);
     System.out.println(printAsLinkedList(head));
   }

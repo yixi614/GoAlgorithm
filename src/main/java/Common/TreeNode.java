@@ -15,7 +15,7 @@ public class TreeNode {
 
   public String printD() {
     StringBuilder str = new StringBuilder();
-    depthFirstSearch(this,str);
+    preOrderTraverse(this,str);
     return str.toString();
   }
 
@@ -25,9 +25,9 @@ public class TreeNode {
     return str.toString();
   }
 
-  public String midTraverse() {
+  public String inOrderTraverse() {
     StringBuilder str = new StringBuilder();
-    midTraverse(this,str);
+    inOrderTraverse(this,str);
     return str.toString();
   }
 
@@ -55,23 +55,23 @@ public class TreeNode {
     }
   }
 
-  private void depthFirstSearch(TreeNode node, StringBuilder str) {
+  private void preOrderTraverse(TreeNode node, StringBuilder str) {
     if (node == null) {
       str.append("null,");
       return;
     }
     str.append(node.value + ",");
-    depthFirstSearch(node.left,str);
-    depthFirstSearch(node.right,str);
+    preOrderTraverse(node.left,str);
+    preOrderTraverse(node.right,str);
   }
 
-  private void midTraverse(TreeNode node, StringBuilder str) {
+  private void inOrderTraverse(TreeNode node, StringBuilder str) {
     if (node == null) {
       return;
     }
-    midTraverse(node.left, str);
+    inOrderTraverse(node.left, str);
     str.append(node.value + ",");
-    midTraverse(node.right, str);
+    inOrderTraverse(node.right, str);
   }
 
 }
