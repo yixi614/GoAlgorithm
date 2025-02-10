@@ -19,32 +19,32 @@ Output: false
 * */
 public class PermutationsInString {
     public boolean checkInclusion(String s1, String s2) {
-
         if (s1.length() > s2.length()) return false;
 
-        int[] f1 = new int[26];
-        int[] f2 = new int[26];
+        int[] s1Count = new int[26];
+        int[] s2Count = new int[26];
 
+        // Count the frequency of characters in s1 and the first window of s2
         for (int i = 0; i < s1.length(); i++) {
-            f1[s1.charAt(i) - 'a']++;
-        }
-        for (int i = 0; i < s1.length() - 1; i++) {
-            f2[s2.charAt(i) - 'a']++;
+            s1Count[s1.charAt(i) - 'a']++;
+            s2Count[s2.charAt(i) - 'a']++;
         }
 
-        if (check(f1, f2)) return true;
-
-        for (int i = s1.length() - 1, j = 0; i < s2.length(); i++, j++) {
-            f2[s2.charAt(i) - 'a']++;
-            if (check(f1, f2)) return true;
-            f2[s2.charAt(j) - 'a']--;
+        // Slide the window over s2
+        for (int i = 0; i < s2.length() - s1.length(); i++) {
+            if (matches(s1Count, s2Count)) return true;
+            // Update the window
+            s2Count[s2.charAt(i) - 'a']--;
+            s2Count[s2.charAt(i + s1.length()) - 'a']++;
         }
-        return false;
+
+        // Check the last window
+        return matches(s1Count, s2Count);
     }
 
-    public static boolean check(int[] f1, int[] f2) {
+    private boolean matches(int[] s1Count, int[] s2Count) {
         for (int i = 0; i < 26; i++) {
-            if (f1[i] != f2[i]) return false;
+            if (s1Count[i] != s2Count[i]) return false;
         }
         return true;
     }

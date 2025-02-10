@@ -19,11 +19,11 @@ public class SortMillionNumbers {
     //System.out.println("Original numbers:");
     for (int i = 0; i < a.length; i++) {
       //System.out.println(a[i]);
-      bm.put(a[i]);
+      bm.set(a[i]);
     }
     //System.out.println("Sorted numbers:");
     for (int i = 0,j = 0; i < maxNumber; i++) {
-      if (bm.contains(i)) {
+      if (bm.get(i)) {
         a[j++] = i;
       }
     }

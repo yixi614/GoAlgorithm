@@ -22,7 +22,7 @@ public class MaxWaterArea {
     int maxArea = 0;
     while (left < right) {
       // Always move the shorter vertical lines ahead can get a potential bigger area value
-      // Because (right - left) is becomming smaller and smaller.
+      // Because (right - left) is becoming smaller and smaller.
       int area = (right - left) * Math.min(height[left], height[right]);
       maxArea = Math.max(area, maxArea);
       if (height[left] < height[right]) {

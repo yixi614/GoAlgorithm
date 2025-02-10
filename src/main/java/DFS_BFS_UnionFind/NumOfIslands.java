@@ -21,86 +21,62 @@ package DFS_BFS_UnionFind;
 
 import Common.UnionFind;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class NumOfIslands {
-  // DFS
-  public int numIslands(char[][] grid) {
-    int res = 0;
-    HashMap<Integer, Boolean> visited = new HashMap();
-    for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[0].length; j++) {
-        if (grid[i][j] == '1') {
-          res++;
-          dfs(grid, i, j, visited);
-        }
-      }
+    // DFS
+    public void dfs(char[][] grid, int i, int j, int m, int n) {
+        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == '0') return;
+        // mark 1 to 0 which indicate that it has been visited
+        grid[i][j] = '0';
+        dfs(grid, i + 1, j, m, n);
+        dfs(grid, i, j + 1, m, n);
+        dfs(grid, i - 1, j, m, n);
+        dfs(grid, i, j - 1, m, n);
     }
-    for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[0].length; j++) {
-        if (grid[i][j] == 'x') {
-          grid[i][j] = '1';
-        }
-      }
-    }
-    return res;
-  }
 
-  public void dfs(char[][] grid, int i, int j, Map<Integer, Boolean> visited) {
-    int rows = grid.length;
-    int cols = grid[0].length;
-    if (i < 0 || i >= rows || j < 0 || j >= cols) {
-      return;
-    }
-    if (visited.get((int) grid[i][j]) != null) {
-      return;
-    }
-    if (grid[i][j] == '0') {
-      visited.put((int) grid[i][j], true);
-      return;
-    }
-    if (grid[i][j] == '1') {
-      grid[i][j] = 'x';
-      visited.put((int) grid[i][j], true);
-    }
-    dfs(grid, i, j + 1, visited);
-    dfs(grid, i, j - 1, visited);
-    dfs(grid, i + 1, j, visited);
-    dfs(grid, i - 1, j, visited);
-  }
-
-  // UnionFind
-  public int numIslands2(char[][] grid) {
-    int rows = grid.length;
-    int cols = grid[0].length;
-    UnionFind uf = new UnionFind(rows * cols);
-    int totalOnes = 0;
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        if (grid[i][j] == '1') {
-          totalOnes++;
-        }
-      }
-    }
-    uf.setCount(totalOnes);
-    int[][] d = new int[][]{{1, 0}, {0, 1}, {0, -1}, {-1, 0}};
-    // union all connected 1
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        if (grid[i][j] == '1') {
-          // search around four directions
-          for (int k = 0; k < d.length; k++) {
-            int x = i + d[k][0];
-            int y = j + d[k][1];
-            if (0 <= x && x <= rows - 1 && 0 <= y &&
-                y <= cols - 1 && grid[x][y] == '1') {
-              uf.union(x * cols + y, i * cols + j);
+    public int numIslands3(char[][] grid) {
+        int m = grid.length, n = grid[0].length, ans = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1') {
+                    dfs(grid, i, j, m, n);
+                    ans++;
+                }
             }
-          }
         }
-      }
+        return ans;
     }
-    return uf.count();
-  }
+
+    // UnionFind
+    public int numIslands2(char[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        UnionFind uf = new UnionFind(rows * cols);
+        int totalOnes = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == '1') {
+                    totalOnes++;
+                }
+            }
+        }
+        uf.setCount(totalOnes);
+        int[][] d = new int[][]{{1, 0}, {0, 1}, {0, -1}, {-1, 0}};
+        // union all connected 1
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == '1') {
+                    // search around four directions
+                    for (int k = 0; k < d.length; k++) {
+                        int x = i + d[k][0];
+                        int y = j + d[k][1];
+                        if (0 <= x && x <= rows - 1 && 0 <= y &&
+                                y <= cols - 1 && grid[x][y] == '1') {
+                            uf.union(x * cols + y, i * cols + j);
+                        }
+                    }
+                }
+            }
+        }
+        return uf.count();
+    }
 }

@@ -20,10 +20,10 @@ package Common;
  * Example: Store 1-1000 as [1,1000] instead of 1000 values
  * */
 
-class Bitmap {
+public class BitMap {
     private long[] bits;
 
-    public Bitmap(int size) {
+    public BitMap(int size) {
         bits = new long[(size + 63) / 64];
     }
     // pos % 64 is equivalent to pos & 63 (or pos & 0x3F).
@@ -40,7 +40,7 @@ class Bitmap {
     }
 
   public static void main(String[] args) {
-      Bitmap bv = new Bitmap(10);
+      BitMap bv = new BitMap(10);
       bv.set(2);
       System.out.println(bv.get(2));
       bv.set(3);
