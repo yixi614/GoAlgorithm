@@ -8,8 +8,6 @@ import java.util.Map;
 substring
  without repeating characters.
 
-
-
 Example 1:
 
 Input: s = "abcabcbb"
@@ -34,26 +32,32 @@ Constraints:
 s consists of English letters, digits, symbols and spaces.
 * */
 public class LonggestSubstringWithoutRepeatingCharacters {
-    public int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring(String s) {
         Map<Character, Integer> map = new HashMap<>();
         int i = 0;
         int j = 0;
         int max = 0;
-        while(j < s.length()){
+        while (j < s.length()) {
             map.put(s.charAt(j), map.getOrDefault(s.charAt(j), 0) + 1);
-            if(map.size() == j - i + 1){
+            if (map.size() == j - i + 1) { // found a expected substring in window (i, j)
                 max = Math.max(max, j - i + 1);
-                j++;
-            }
-            else if(map.size() < j - i + 1){
-                while(map.size() < j - i + 1){
+            } else if (map.size() < j - i + 1) { // current window(i, j) has duplicates.
+                // Move window left index i until no duplicates, but it doesn't mean it can generate a substring with bigger size.
+                // The substring within the window is less than the previous windowed string in the last iteration
+                while (map.size() < j - i + 1) {
                     map.put(s.charAt(i), map.get(s.charAt(i)) - 1);
-                    if(map.get(s.charAt(i)) == 0) map.remove(s.charAt(i));
+                    if (map.get(s.charAt(i)) == 0) {
+                        map.remove(s.charAt(i));
+                    }
                     i++;
                 }
-                j++;
             }
+            j++;
         }
         return max;
+    }
+    public static void main(String[] args) {
+        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(lengthOfLongestSubstring("pwwkew"));
     }
 }

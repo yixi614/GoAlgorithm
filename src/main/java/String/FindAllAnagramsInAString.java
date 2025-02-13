@@ -7,7 +7,7 @@ import java.util.*;
 
  Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100.
 
- n Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+ an Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
  The order of output does not matter.
 
  Example 1:
@@ -54,13 +54,14 @@ public class FindAllAnagramsInAString {
   public static boolean isAnagram(char[] s, char t[]) {
     int [] arr = new int[26];
     for(char ch: s)
-      arr[ch - 97] += 1;
+      arr[ch - 'a'] += 1;
     for (char ch: t)
-      arr[ch - 97] -= 1;
+      arr[ch - 'a'] -= 1;
     for (int count: arr)
       if (count != 0) return false;
     return true;
   }
+  // s is a longer string. p is a shorter string
   public static List<Integer> findAnagrams(String s, String p) {
     int finish = p.length();
     List<Integer> indexList= new ArrayList<>();

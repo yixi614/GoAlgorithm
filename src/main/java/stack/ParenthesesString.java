@@ -32,7 +32,7 @@ import java.util.*;
 class ParenthesesString {
   public static String minRemoveToMakeValid(String s) {
     Map<Integer, Boolean> indexToRemove = new HashMap<>();
-    Deque<Integer> stack = new ArrayDeque<>();
+    Stack<Integer> stack = new Stack<>();
     for (int i = 0; i < s.length(); i++) {
       char e = s.charAt(i);
       if (e == '(') {
