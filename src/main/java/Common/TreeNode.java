@@ -33,6 +33,9 @@ public class TreeNode {
 
   @Override
   public String toString() {
+    if (this == null) {
+      return "null";
+    }
     return "TreeNode{" +
             "value=" + value +
             ", left=" + left +
