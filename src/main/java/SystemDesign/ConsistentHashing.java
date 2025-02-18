@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class ConsistentHashing {
+    // key is the hash value of virtual node name, value is the node name
     private TreeMap<Long, String> hashRing = new TreeMap<>();
     private int virtualNodes = 100;
 
