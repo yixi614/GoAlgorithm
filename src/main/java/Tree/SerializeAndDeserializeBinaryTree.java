@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class SerializeAndDeserializeBinaryTree {
+    // BFT
     public String serialize(TreeNode root) {
         if (root == null) return "";
         Queue<TreeNode> q = new LinkedList<>();
